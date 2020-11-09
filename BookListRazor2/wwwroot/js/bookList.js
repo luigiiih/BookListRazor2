@@ -12,7 +12,7 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "name", "width": "20%" },
+            { "data": "name", "width": "20%",},
             { "data": "author", "width": "20%" },
             { "data": "isbn", "width": "20%" },
             {
@@ -36,4 +36,32 @@ function loadDataTable() {
         },
         "width": "100%"
     });
+}
+
+function Delete(url) {
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        dataTable.ajax.reload();
+                    }
+                    else {
+                        toastr.error(message);
+                    }
+                }
+            });
+        }
+
+    });
+
 }
